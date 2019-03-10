@@ -1,0 +1,56 @@
+.image-responsive {
+    width: 100%;
+}
+
+.margem-row {
+    margin-bottom: 1em;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.card-imagem {
+    box-shadow: 0 0 35px black;
+}
+
+.clear {
+    clear: both;
+}
+
+.cast-detalhe h4 {
+    margin-bottom: -0.5em;
+    padding-top: 0.7em;
+}
+
+.cast-detalhe img {
+    margin-right: 1em;
+    float: left;
+    position: unset !important;
+    border-radius: 50%;
+    height: 55px !important;
+    width: 55px;
+}
+
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+option {
+    color: #CECBD5 !important;
+    background: #251747 !important;
+}
+
+.modal-dialog {
+    margin-top: -10em !important;
+}
