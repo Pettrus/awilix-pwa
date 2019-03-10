@@ -54,3 +54,18 @@ option {
 .modal-dialog {
     margin-top: -10em !important;
 }
+
+.botao-topo-pagina {
+    position: fixed !important;
+    bottom: 2em !important;
+    right: 4em !important;
+}
+
+.centralizar {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+html, body {
+    height: 100% !important;
+}

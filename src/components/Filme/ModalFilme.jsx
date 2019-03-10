@@ -20,7 +20,7 @@ export default class ModalFilme extends React.Component {
                 carregando: true
             });
 
-            if (this.state.modal == false) {
+            if (this.state.modal === false) {
                 filme = await getRequest("/filmes/" + filme.id);
             }
 
@@ -66,7 +66,7 @@ export default class ModalFilme extends React.Component {
                                         </div>
 
                                         <p className="text-justify">
-                                            {this.state.filme.overview == '' ? 'Sem descrição' : this.state.filme.overview}
+                                            {this.state.filme.overview === '' ? 'Sem descrição' : this.state.filme.overview}
                                         </p>
 
                                         <hr style={{ width: '100%' }} />
@@ -101,7 +101,7 @@ export default class ModalFilme extends React.Component {
                                         <div className="row">
                                             <div className="col-md-4">
                                                 <a className="btn btn-default" href={'https://www.imdb.com/title/' + this.state.filme.imdb_id}
-                                                    target="_blank">
+                                                    target="_blank" rel="noopener noreferrer">
                                                     IMDB
                                             </a>
                                             </div>
@@ -129,7 +129,7 @@ export default class ModalFilme extends React.Component {
                                         {this.state.filme.cast != null && this.state.filme.cast.slice(0, 4).map(cast => (
                                             <div key={cast.id}>
                                                 <div className="cast-detalhe">
-                                                    <img src={'http://image.tmdb.org/t/p/w300' + cast.profile_path} />
+                                                    <img src={'http://image.tmdb.org/t/p/w300' + cast.profile_path} alt={cast.name} />
                                                     <h4 style={{ color: 'black' }}>{cast.name}</h4>
                                                     <small>{cast.character}</small>
 
@@ -145,16 +145,12 @@ export default class ModalFilme extends React.Component {
                 </div>
 
                 <div className="modal-footer">
-                    <Button color="default" type="button">
-                        Nice Button
-                            </Button>
-
                     <Button
                         color="danger"
                         type="button"
                         onClick={() => this.toggleModal({})}>
                         Fechar
-                            </Button>
+                    </Button>
                 </div>
             </Modal>
         )

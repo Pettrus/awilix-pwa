@@ -2,7 +2,6 @@ import React from "react";
 
 // core components
 import IndexNavbar from "components/Navbars/IndexNavbar.jsx";
-import PageHeader from "components/PageHeader/PageHeader.jsx";
 import Footer from "components/Footer/Footer.jsx";
 
 // sections for this page/view

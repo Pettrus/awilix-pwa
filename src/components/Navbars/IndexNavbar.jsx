@@ -2,17 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
-  Button,
   Collapse,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
   NavbarBrand,
   Navbar,
-  NavItem,
-  NavLink,
-  Nav,
   Container,
   Row,
   Col
@@ -86,7 +78,7 @@ class ComponentsNavbar extends React.Component {
               title="Designed and Coded by Creative Tim"
               tag={Link}
             >
-              <span>BLK• </span>
+              <span>Awilix• </span>
               Design System React
             </NavbarBrand>
             <button
@@ -110,7 +102,7 @@ class ComponentsNavbar extends React.Component {
               <Row>
                 <Col className="collapse-brand" xs="6">
                   <a href="#pablo" onClick={e => e.preventDefault()}>
-                    BLK•React
+                    Awilix•React
                   </a>
                 </Col>
                 <Col className="collapse-close text-right" xs="6">
@@ -124,7 +116,7 @@ class ComponentsNavbar extends React.Component {
                 </Col>
               </Row>
             </div>
-            <Nav navbar>
+            {/*<Nav navbar>
               <NavItem className="p-0">
                 <NavLink
                   data-placement="bottom"
@@ -201,7 +193,7 @@ class ComponentsNavbar extends React.Component {
                   <i className="tim-icons icon-cloud-download-93" /> Download
                 </Button>
               </NavItem>
-            </Nav>
+            </Nav>*/}
           </Collapse>
         </Container>
       </Navbar>

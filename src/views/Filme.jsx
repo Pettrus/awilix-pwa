@@ -8,6 +8,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
 import ModalFilme from '../components/Filme/ModalFilme';
 import PosterFilme from "../components/Filme/PosterFilme";
+import SkeletonLoaderFilme from '../components/Filme/SkeletonLoaderFilme';
+import ScrollToTop from "../components/Filme/ScrollToTop";
+import ReactLoading from 'react-loading';
 
 const modalRef = React.createRef();
 
@@ -20,11 +23,16 @@ class Filme extends React.Component {
         pagina: 1,
         palavraChave: "",
         queryPesquisa: null,
-        temMaisFilmes: true
+        temMaisFilmes: true,
+        carregando: false
     }
 
     async componentDidMount() {
         try {
+            this.setState({
+                carregando: true
+            });
+
             const [filmes, generos] = await axios.all([
                 getRequest("/filmes/nos-cinemas/1"),
                 getRequest("/filmes/generos")
@@ -33,7 +41,8 @@ class Filme extends React.Component {
             this.setState({
                 filmes: filmes,
                 generos: generos,
-                queryPesquisa: "/filmes/nos-cinemas/"
+                queryPesquisa: "/filmes/nos-cinemas/",
+                carregando: false
             });
         } catch (e) {
             console.log(e);
@@ -42,6 +51,8 @@ class Filme extends React.Component {
 
     pesquisar = async () => {
         try {
+            this.setState({ carregando: true });
+
             let queryPesquisa = "";
 
             if (this.state.palavraChave)
@@ -57,7 +68,8 @@ class Filme extends React.Component {
                 filmes: filmes,
                 pagina: 1,
                 queryPesquisa: queryPesquisa,
-                temMaisFilmes: true
+                temMaisFilmes: true,
+                carregando: false
             });
         } catch (e) {
             console.log(e);
@@ -68,11 +80,9 @@ class Filme extends React.Component {
         try {
             if (this.state != null && this.state.filmes.length > 0) {
                 const pagina = this.state.pagina + 1;
-
-                console.log("Esta mandando requisicao");
                 const novos = await getRequest(this.state.queryPesquisa + pagina);
 
-                if (novos == null || novos.length == 0) {
+                if (novos === null || novos.length === 0) {
                     this.setState({
                         temMaisFilmes: false
                     });
@@ -94,7 +104,6 @@ class Filme extends React.Component {
     }
 
     alterarGenero = (event) => {
-        console.log(event.target.value);
         this.setState({
             genero: event.target.value,
             palavraChave: ""
@@ -142,6 +151,7 @@ class Filme extends React.Component {
                             <Button
                                 color="warning"
                                 type="button"
+                                disabled={this.state.carregando}
                                 style={{ marginTop: '2.1em' }}
                                 onClick={() => this.pesquisar()}>
                                 Pesquisar
@@ -149,11 +159,15 @@ class Filme extends React.Component {
                         </div>
                     </div>
 
+                    {this.state.carregando === true &&
+                        <SkeletonLoaderFilme></SkeletonLoaderFilme>
+                    }
+
                     {this.state.filmes.length > 0 ? (
                         <InfiniteScroll
                             loadMore={() => this.carregarMais()}
                             hasMore={this.state.temMaisFilmes}
-                            loader={'<Carregando></Carregando>'}>
+                            loader={<ReactLoading key={1} className="centralizar" />}>
 
                             <div className="row">
                                 {this.state.filmes.map(filme => (
@@ -172,6 +186,8 @@ class Filme extends React.Component {
 
                     <ModalFilme ref={modalRef}></ModalFilme>
                 </div>
+
+                <ScrollToTop></ScrollToTop>
             </div>
         );
     }
