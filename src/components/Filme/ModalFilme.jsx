@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 import { getRequest } from '../../services/Api';
 import SkeletonLoaderModal from '../../components/Filme/SkeletonLoaderModal';
 import PosterFilme from './PosterFilme';
+import { checarErro } from '../../services/Mensagem';
 
 export default class ModalFilme extends React.Component {
     state = {
@@ -29,7 +30,7 @@ export default class ModalFilme extends React.Component {
                 carregando: false
             });
         } catch (e) {
-            console.log(e);
+            checarErro(e.response);
         }
     }
 

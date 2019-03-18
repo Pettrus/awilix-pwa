@@ -11,6 +11,7 @@ import PosterFilme from "../components/Filme/PosterFilme";
 import SkeletonLoaderFilme from '../components/Filme/SkeletonLoaderFilme';
 import ScrollToTop from "../components/Filme/ScrollToTop";
 import ReactLoading from 'react-loading';
+import { checarErro } from '../services/Mensagem';
 
 const modalRef = React.createRef();
 
@@ -45,7 +46,7 @@ class Filme extends React.Component {
                 carregando: false
             });
         } catch (e) {
-            console.log(e);
+            //checarErro(e.response);
         }
     }
 
@@ -72,7 +73,7 @@ class Filme extends React.Component {
                 carregando: false
             });
         } catch (e) {
-            console.log(e);
+            checarErro(e.response);
         }
     }
 
@@ -99,7 +100,7 @@ class Filme extends React.Component {
                 }
             }
         } catch (e) {
-            console.log(e);
+            checarErro(e.response);
         }
     }
 

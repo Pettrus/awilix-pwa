@@ -69,3 +69,8 @@ option {
 html, body {
     height: 100% !important;
 }
+
+.modal-cadastro .modal-content {
+    margin-top: 20vh;
+    box-shadow: 0 20px 21px black;
+}

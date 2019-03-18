@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// reactstrap components
+
 import {
     Collapse,
     NavbarBrand,
@@ -17,6 +17,10 @@ import Login from '../Login';
 const modalRef = React.createRef();
 
 class ComponentsNavbar extends React.Component {
+    state = {
+        usuario: null
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,6 +30,12 @@ class ComponentsNavbar extends React.Component {
     }
 
     componentDidMount() {
+        this.atualizarUsuario();
+
+        window.addEventListener('storage', () => {
+            this.atualizarUsuario();
+        });
+
         window.addEventListener("scroll", this.changeColor);
     }
 
@@ -74,6 +84,18 @@ class ComponentsNavbar extends React.Component {
         document
             .getElementById("download-section")
             .scrollIntoView({ behavior: "smooth" });
+    }
+
+    sair = () => {
+        localStorage.removeItem("auth");
+        localStorage.removeItem("usuario");
+
+        window.dispatchEvent( new Event('storage') );
+    }
+
+    atualizarUsuario = () => {
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+        this.setState({ usuario: usuario });
     }
 
     render() {
@@ -129,16 +151,27 @@ class ComponentsNavbar extends React.Component {
                                     </Col>
                                 </Row>
                             </div>
-                            <Nav navbar>
-                                <NavItem>
-                                    <Button
-                                        className="nav-link d-none d-lg-block"
-                                        color="default"
-                                        onClick={() => modalRef.current.toggleModal()}>
-                                        <i className="tim-icons icon-cloud-download-93" /> Login
-                                </Button>
-                                </NavItem>
-                            </Nav>
+
+                            {this.state.usuario != null ? (
+                                <div style={{color: 'white'}}>
+                                    Olá {this.state.usuario.nome}
+
+                                    <Button color="default" onClick={() => this.sair()}>
+                                        Sair
+                                    </Button>
+                                </div>
+                            ) : (
+                                <Nav navbar>
+                                    <NavItem>
+                                        <Button
+                                            className="nav-link d-none d-lg-block"
+                                            color="default"
+                                            onClick={() => modalRef.current.toggleModal()}>
+                                            <i className="tim-icons icon-lock-circle" /> Login
+                                        </Button>
+                                    </NavItem>
+                                </Nav>
+                            )}
                         </Collapse>
                     </Container>
                 </Navbar>

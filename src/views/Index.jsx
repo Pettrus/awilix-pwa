@@ -6,6 +6,8 @@ import Footer from "components/Footer/Footer.jsx";
 
 // sections for this page/view
 import Filme from "views/Filme.jsx";
+import 'react-toastify/dist/ReactToastify.min.css'
+import { ToastContainer } from 'react-toastify';
 
 class Index extends React.Component {
   componentDidMount() {
@@ -24,6 +26,8 @@ class Index extends React.Component {
           </div>
           <Footer />
         </div>
+
+        <ToastContainer />
       </>
     );
   }
