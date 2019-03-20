@@ -40,7 +40,7 @@ export default class CadastroUsuario extends React.Component {
 
             await postRequest("/autenticacao", usuario);
 
-            mensagemToast("Cadastro realizado com sucesso!");
+            mensagemToast("Um email foi enviado para você contendo mais informações do cadastro");
 
             this.voltar();
         } catch (e) {

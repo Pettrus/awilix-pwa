@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import CadastroUsuario from "./CadastroUsuario";
 import { logar } from "../services/Api";
-import { mensagemToast } from '../services/Mensagem';
+import { checarErro } from '../services/Mensagem';
 
 export default class Login extends React.Component {
     state = {
@@ -42,7 +42,7 @@ export default class Login extends React.Component {
 
             this.toggleModal();
         } catch (e) {
-            mensagemToast("Email ou senha incorretos.", "warn");
+            checarErro(e.response);
         } finally {
             this.setState({ carregando: false });
         }
