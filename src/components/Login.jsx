@@ -63,6 +63,7 @@ export default class Login extends React.Component {
 
                 <div className="modal-header justify-content-center">
                     <button
+                        id="fecharModal"
                         className="close"
                         onClick={() => this.toggleModal("formModal")}>
                         <i className="tim-icons icon-simple-remove text-white" />
@@ -75,8 +76,8 @@ export default class Login extends React.Component {
                 </div>
 
                 {!this.state.modoCadastro ? (
-                    <div className="modal-body">
-                        <Form role="form" onSubmit={this.login}>
+                    <div id="renderLogin" className="modal-body">
+                        <Form id="form" role="form" onSubmit={this.login}>
                             <FormGroup className="mb-3">
                                 <InputGroup
                                     className={classnames("input-group-alternative", {
@@ -90,6 +91,7 @@ export default class Login extends React.Component {
                                     <Input
                                         placeholder="Email"
                                         type="email"
+                                        id="email"
                                         onFocus={e => this.setState({ emailFocus: true })}
                                         onBlur={e => this.setState({ emailFocus: false })}
                                         value={this.state.email}
@@ -111,6 +113,7 @@ export default class Login extends React.Component {
                                     <Input
                                         placeholder="Senha"
                                         type="password"
+                                        id="senha"
                                         onFocus={e => this.setState({ passwordFocus: true })}
                                         onBlur={e => this.setState({ passwordFocus: false })}
                                         value={this.state.senha}
@@ -120,20 +123,22 @@ export default class Login extends React.Component {
                             </FormGroup>
 
                             <div className="text-center">
-                                <Button className="my-4" color="primary" type="submit" disabled={this.state.carregando}>
+                                <Button id="entrar" className="my-4" color="primary" type="submit" disabled={this.state.carregando}>
                                     Entrar
                                 </Button>
 
-                                <Button className="my-4" color="secondary" type="button" disabled={this.state.carregando}
-                                onClick={() => this.cadastro(true)}>
+                                <Button id="mostrarModalCadastro" className="my-4" color="secondary" type="button"
+                                    disabled={this.state.carregando} onClick={() => this.cadastro(true)}>
                                     Cadastro
                                 </Button>
                             </div>
                         </Form>
                     </div>
                 ) : (
+                    <div id="renderCadastro">
                         <CadastroUsuario voltar={this.cadastro}></CadastroUsuario>
-                    )}
+                    </div>
+                )}
             </Modal>
         );
     }

@@ -42,11 +42,12 @@ class Filme extends React.Component {
             this.setState({
                 filmes: filmes,
                 generos: generos,
-                queryPesquisa: "/filmes/nos-cinemas/",
-                carregando: false
+                queryPesquisa: "/filmes/nos-cinemas/"
             });
         } catch (e) {
-            //checarErro(e.response);
+            checarErro(e);
+        } finally {
+            this.setState({ carregando: false });
         }
     }
 
