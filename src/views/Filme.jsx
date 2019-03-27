@@ -122,7 +122,7 @@ class Filme extends React.Component {
     render() {
         return (
             <div className="section section-basic" id="basic-elements">
-                <img alt="..." className="path" src={require("assets/img/path1.png")} />
+                <img alt="..." className="path" src={"/assets/img/path1.png"} />
 
                 <div className="container">
                     <h2 className="title">Descobrir filmes</h2>
@@ -145,11 +145,11 @@ class Filme extends React.Component {
                             <div className="form-group">
                                 <h5>Palavra-chave</h5>
                                 <input type="text" className="form-control" value={this.state.palavraChave} placeholder="Filtrar por palavras chaves"
-                                    onChange={this.alterarPalavraChave} />
+                                    onChange={this.alterarPalavraChave} id="palavraChave" />
                             </div>
                         </div>
 
-                        <div className="col-md-2">
+                        <div className="col-md-2 text-center">
                             <Button
                                 color="warning"
                                 type="button"
@@ -167,20 +167,21 @@ class Filme extends React.Component {
 
                     {this.state.filmes.length > 0 ? (
                         <InfiniteScroll
+                            id="scroll"
                             loadMore={() => this.carregarMais()}
                             hasMore={this.state.temMaisFilmes}
                             loader={<ReactLoading key={1} className="centralizar" />}>
 
                             <div className="row">
                                 {this.state.filmes.map(filme => (
-                                    <div key={filme.id} className="col-md-4 col-lg-3" onClick={() => modalRef.current.toggleModal(filme)}>
+                                    <div key={filme.id} className="col-6 col-md-4 col-lg-3" onClick={() => modalRef.current.toggleModal(filme)}>
                                         <PosterFilme filme={filme} shadow={true}></PosterFilme>
                                     </div>
                                 ))}
                             </div>
                         </InfiniteScroll>
                     ) : (
-                            <div className="text-center" style={{ marginTop: '2em' }}>
+                            <div id="semFilmes" className="text-center" style={{ marginTop: '2em' }}>
                                 <h4>Nenhum filme encontrado</h4>
                             </div>
                         )

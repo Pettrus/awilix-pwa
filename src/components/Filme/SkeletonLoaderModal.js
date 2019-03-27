@@ -2,7 +2,7 @@ import React from 'react';
 import Skeleton from 'react-skeleton-loader';
 
 const SkeletonLoaderModal = () => (
-    <div>
+    <div style={{marginBottom: '3em'}}>
         <div className="row">
             <div className="col-md-4">
                 <Skeleton width={'100%'} />

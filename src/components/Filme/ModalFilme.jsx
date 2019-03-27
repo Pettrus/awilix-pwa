@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Modal } from "reactstrap";
 import Moment from 'react-moment';
-import { getRequest } from '../../services/Api';
+import { getRequest, getUsuarioLogado } from '../../services/Api';
 import SkeletonLoaderModal from '../../components/Filme/SkeletonLoaderModal';
 import PosterFilme from './PosterFilme';
 import { checarErro } from '../../services/Mensagem';
@@ -11,18 +11,23 @@ export default class ModalFilme extends React.Component {
     state = {
         modal: false,
         carregando: false,
-        filme: {}
+        filme: {},
+        popCorn: {}
     }
 
     toggleModal = async (filme) => {
         try {
             this.setState({
                 modal: !this.state.modal,
-                carregando: true
+                carregando: true,
+                popCorn: {}
             });
 
             if (this.state.modal === false) {
                 filme = await getRequest("/filmes/" + filme.id);
+
+                if(getUsuarioLogado != null)
+                    this.carregarPopCorn(filme.imdb_id);
             }
 
             this.setState({
@@ -32,6 +37,32 @@ export default class ModalFilme extends React.Component {
         } catch (e) {
             checarErro(e.response);
         }
+    }
+
+    carregarPopCorn = async(imdb) => {
+        try {
+            const popCorn = await getRequest("/filmes/popcorn/" + imdb);
+
+            this.setState({ popCorn: popCorn });
+        }catch(e) {
+            checarErro(e.response);
+        }
+    }
+
+    downloadMagnetico = () => {
+        let torrent = null;
+        if(this.state.popCorn.torrents.en["1080p"] != null)
+            torrent = this.state.popCorn.torrents.en["1080p"];
+        else
+            torrent = this.state.popCorn.torrents.en["720p"];
+
+        let link = document.createElement('a')
+        link.id = 'someLink';
+        link.href = torrent.url;
+
+        document.getElementById('lista').appendChild(link);
+        document.getElementById('someLink').click();
+        document.getElementById('someLink').outerHTML = '';
     }
 
     render() {
@@ -100,12 +131,21 @@ export default class ModalFilme extends React.Component {
                                         <hr style={{ width: '100%' }} />
 
                                         <div className="row">
-                                            <div className="col-md-4">
+                                            <div className="col-4 text-center">
                                                 <a className="btn btn-default" href={'https://www.imdb.com/title/' + this.state.filme.imdb_id}
                                                     target="_blank" rel="noopener noreferrer">
                                                     IMDB
-                                            </a>
+                                                </a>
                                             </div>
+
+                                            {this.state.popCorn.torrents != null && this.state.popCorn.torrents.en != null &&
+                                                <div className="col-4 text-center">
+                                                    <button className="btn btn-success btn-icon" onClick={() => this.downloadMagnetico()}
+                                                        title="PopCorn Time">
+                                                        <img src="/popcorntime.png" />
+                                                    </button>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -153,6 +193,8 @@ export default class ModalFilme extends React.Component {
                         Fechar
                     </Button>
                 </div>
+
+                <div id="lista"></div>
             </Modal>
         )
     }

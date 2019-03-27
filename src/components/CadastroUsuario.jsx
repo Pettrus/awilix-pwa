@@ -57,7 +57,7 @@ export default class CadastroUsuario extends React.Component {
     render() {
         return (
             <div className="modal-body">
-                <Form role="form" onSubmit={this.cadastrar}>
+                <Form id="form" role="form" onSubmit={this.cadastrar}>
                     <FormGroup className="mb-3">
                         <InputGroup
                             className={classnames("input-group-alternative", {
@@ -71,6 +71,7 @@ export default class CadastroUsuario extends React.Component {
                             <Input
                                 placeholder="Nome"
                                 type="text"
+                                id="nome"
                                 onFocus={e => this.setState({ nomeFocus: true })}
                                 onBlur={e => this.setState({ nomeFocus: false })}
                                 value={this.state.nome}
@@ -92,6 +93,7 @@ export default class CadastroUsuario extends React.Component {
                             <Input
                                 placeholder="Email"
                                 type="email"
+                                id="email"
                                 onFocus={e => this.setState({ emailFocus: true })}
                                 onBlur={e => this.setState({ emailFocus: false })}
                                 value={this.state.email}
@@ -113,6 +115,7 @@ export default class CadastroUsuario extends React.Component {
                             <Input
                                 placeholder="Senha"
                                 type="password"
+                                id="senha"
                                 onFocus={e => this.setState({ passwordFocus: true })}
                                 onBlur={e => this.setState({ passwordFocus: false })}
                                 value={this.state.senha}
@@ -134,6 +137,7 @@ export default class CadastroUsuario extends React.Component {
                             <Input
                                 placeholder="Repetir Senha"
                                 type="password"
+                                id="senhaRepetida"
                                 onFocus={e => this.setState({ passwordRepetidoFocus: true })}
                                 onBlur={e => this.setState({ passwordRepetidoFocus: false })}
                                 value={this.state.senhaRepetida}

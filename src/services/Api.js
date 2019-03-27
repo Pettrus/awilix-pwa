@@ -28,3 +28,7 @@ export const logar = (params) => {
     return res.data;
   });
 }
+
+export const getUsuarioLogado = () => {
+  return JSON.parse(localStorage.getItem('usuario'));
+}
