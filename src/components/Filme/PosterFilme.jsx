@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LazyLoad from 'react-lazy-load';
 
 const PosterFilme = ({ filme, shadow }) => (
-    <img src={'http://image.tmdb.org/t/p/w300' + filme.poster_path} alt="Poster"
-        className={'image-responsive ' + (shadow ? 'margem-row pointer card-imagem' : '')} />
+    <LazyLoad 
+      debounce={false}
+      offsetVertical={500}
+      >
+        <img src={'http://image.tmdb.org/t/p/w300' + filme.poster_path} alt="Poster"
+            className={'image-responsive ' + (shadow ? 'margem-row pointer card-imagem' : '')} />
+    </LazyLoad>
 );
 
 PosterFilme.propTypes = {

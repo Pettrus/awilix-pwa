@@ -19,7 +19,7 @@ describe('testes de ui', () => {
         expect(wrapper.find('#renderCadastro').length).toBe(1);
     });
     
-    it('renderizar login', async () => {
+    it('renderizar div do login', async () => {
         await wrapper.setState({ modoCadastro: false });
     
         expect(wrapper.find('#renderLogin').length).toBe(1);

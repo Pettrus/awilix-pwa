@@ -63,6 +63,8 @@ export default class ModalFilme extends React.Component {
         document.getElementById('lista').appendChild(link);
         document.getElementById('someLink').click();
         document.getElementById('someLink').outerHTML = '';
+
+        return true;
     }
 
     render() {
@@ -82,11 +84,11 @@ export default class ModalFilme extends React.Component {
                     <h4 className="title title-up">{this.state.filme.title}</h4>
                 </div>
 
-                <div className="modal-body">
+                <div className="modal-body" id="modalBody">
                     {this.state.carregando ? (
-                        <SkeletonLoaderModal></SkeletonLoaderModal>
+                        <SkeletonLoaderModal id="carregando"></SkeletonLoaderModal>
                     ) : (
-                            <div>
+                            <div id="carregado">
                                 <div className="row">
                                     <div className="col-md-4">
                                         <PosterFilme filme={this.state.filme} shadow={false}></PosterFilme>
@@ -139,7 +141,7 @@ export default class ModalFilme extends React.Component {
                                             </div>
 
                                             {this.state.popCorn.torrents != null && this.state.popCorn.torrents.en != null &&
-                                                <div className="col-4 text-center">
+                                                <div id="download" className="col-4 text-center">
                                                     <button className="btn btn-info" onClick={() => this.downloadMagnetico()}>
                                                         <span>Download</span>
                                                     </button>
