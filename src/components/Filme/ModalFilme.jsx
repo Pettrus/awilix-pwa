@@ -140,9 +140,8 @@ export default class ModalFilme extends React.Component {
 
                                             {this.state.popCorn.torrents != null && this.state.popCorn.torrents.en != null &&
                                                 <div className="col-4 text-center">
-                                                    <button className="btn btn-success btn-icon" onClick={() => this.downloadMagnetico()}
-                                                        title="PopCorn Time">
-                                                        <img src="/popcorntime.png" />
+                                                    <button className="btn btn-info" onClick={() => this.downloadMagnetico()}>
+                                                        <span>Download</span>
                                                     </button>
                                                 </div>
                                             }
