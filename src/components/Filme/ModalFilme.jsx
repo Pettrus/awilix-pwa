@@ -26,7 +26,7 @@ export default class ModalFilme extends React.Component {
             if (this.state.modal === false) {
                 filme = await getRequest("/filmes/" + filme.id);
 
-                if(getUsuarioLogado != null)
+                if(getUsuarioLogado() != null)
                     this.carregarPopCorn(filme.imdb_id);
             }
 

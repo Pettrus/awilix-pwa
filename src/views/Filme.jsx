@@ -39,6 +39,8 @@ class Filme extends React.Component {
                 getRequest("/filmes/generos")
             ]);
 
+            console.log(filmes);
+
             this.setState({
                 filmes: filmes,
                 generos: generos,
@@ -81,6 +83,8 @@ class Filme extends React.Component {
     carregarMais = async () => {
         try {
             if (this.state != null && this.state.filmes.length > 0) {
+                console.log("Chamou o carregar mais");
+
                 const pagina = this.state.pagina + 1;
                 const novos = await getRequest(this.state.queryPesquisa + pagina);
 
@@ -93,6 +97,9 @@ class Filme extends React.Component {
 
                     filmes = filmes.concat(this.state.filmes);
                     filmes = filmes.concat(novos);
+
+                    console.log("Mais filmes");
+                    console.log(filmes);
 
                     this.setState({
                         filmes: filmes,
@@ -165,27 +172,29 @@ class Filme extends React.Component {
                         <SkeletonLoaderFilme></SkeletonLoaderFilme>
                     }
 
-                    {this.state.filmes.length > 0 ? (
-                        <InfiniteScroll
-                            id="scroll"
-                            loadMore={() => this.carregarMais()}
-                            hasMore={this.state.temMaisFilmes}
-                            loader={<ReactLoading key={1} className="centralizar" />}>
+                    <div>
+                        {this.state.filmes.length > 0 ? (
+                            <InfiniteScroll
+                                id="scroll"
+                                loadMore={() => this.carregarMais()}
+                                hasMore={this.state.temMaisFilmes}
+                                loader={<ReactLoading key={1} className="centralizar" />}>
 
-                            <div className="row">
-                                {this.state.filmes.map(filme => (
-                                    <div key={filme.id} className="col-6 col-md-4 col-lg-3" onClick={() => modalRef.current.toggleModal(filme)}>
-                                        <PosterFilme filme={filme} shadow={true}></PosterFilme>
-                                    </div>
-                                ))}
-                            </div>
-                        </InfiniteScroll>
-                    ) : (
-                            <div id="semFilmes" className="text-center" style={{ marginTop: '2em' }}>
-                                <h4>Nenhum filme encontrado</h4>
-                            </div>
-                        )
-                    }
+                                <div className="row">
+                                    {this.state.filmes.map(filme => (
+                                        <div key={filme.id} className="col-6 col-md-4 col-lg-3" onClick={() => modalRef.current.toggleModal(filme)}>
+                                            <PosterFilme filme={filme} shadow={true}></PosterFilme>
+                                        </div>
+                                    ))}
+                                </div>
+                            </InfiniteScroll>
+                        ) : (
+                                <div id="semFilmes" className="text-center" style={{ marginTop: '2em' }}>
+                                    <h4>Nenhum filme encontrado</h4>
+                                </div>
+                            )
+                        }
+                    </div>
 
                     <ModalFilme ref={modalRef}></ModalFilme>
                 </div>
