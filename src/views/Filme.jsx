@@ -39,8 +39,6 @@ class Filme extends React.Component {
                 getRequest("/filmes/generos")
             ]);
 
-            console.log(filmes);
-
             this.setState({
                 filmes: filmes,
                 generos: generos,
@@ -83,8 +81,6 @@ class Filme extends React.Component {
     carregarMais = async () => {
         try {
             if (this.state != null && this.state.filmes.length > 0) {
-                console.log("Chamou o carregar mais");
-
                 const pagina = this.state.pagina + 1;
                 const novos = await getRequest(this.state.queryPesquisa + pagina);
 
@@ -97,9 +93,6 @@ class Filme extends React.Component {
 
                     filmes = filmes.concat(this.state.filmes);
                     filmes = filmes.concat(novos);
-
-                    console.log("Mais filmes");
-                    console.log(filmes);
 
                     this.setState({
                         filmes: filmes,
