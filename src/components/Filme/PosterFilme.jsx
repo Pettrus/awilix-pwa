@@ -6,7 +6,7 @@ import Skeleton from 'react-skeleton-loader';
 const PosterFilme = ({ filme, shadow }) => (
     <LazyLoadImage
       alt={filme.title}
-      src={'http://image.tmdb.org/t/p/w300' + filme.poster_path}
+      src={'https://image.tmdb.org/t/p/w300' + filme.poster_path}
       className={'image-responsive ' + (shadow ? 'margem-row pointer card-imagem' : '')}
       effect="opacity"
       threshold={25}
