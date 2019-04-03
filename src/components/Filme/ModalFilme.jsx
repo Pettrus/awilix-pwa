@@ -233,7 +233,7 @@ export default class ModalFilme extends React.Component {
                                         {this.state.filme.cast != null && this.state.filme.cast.slice(0, 4).map(cast => (
                                             <div key={cast.id}>
                                                 <div className="cast-detalhe">
-                                                    <img src={'http://image.tmdb.org/t/p/w300' + cast.profile_path} alt={cast.name} />
+                                                    <img src={'https://image.tmdb.org/t/p/w300' + cast.profile_path} alt={cast.name} />
                                                     <h4 style={{ color: 'black' }}>{cast.name}</h4>
                                                     <small>{cast.character}</small>
 
