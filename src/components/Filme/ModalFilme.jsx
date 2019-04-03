@@ -6,13 +6,15 @@ import { getRequest, getUsuarioLogado } from '../../services/Api';
 import SkeletonLoaderModal from '../../components/Filme/SkeletonLoaderModal';
 import PosterFilme from './PosterFilme';
 import { checarErro } from '../../services/Mensagem';
+import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledButtonDropdown } from 'reactstrap';
 
 export default class ModalFilme extends React.Component {
     state = {
         modal: false,
         carregando: false,
         filme: {},
-        popCorn: {}
+        popCorn: {},
+        emCartaz: []
     }
 
     toggleModal = async (filme) => {
@@ -25,8 +27,9 @@ export default class ModalFilme extends React.Component {
 
             if (this.state.modal === false) {
                 filme = await getRequest("/filmes/" + filme.id);
+                this.carregarHorariosEmCartaz(filme.imdb_id);
 
-                if(getUsuarioLogado() != null)
+                if (getUsuarioLogado() != null)
                     this.carregarPopCorn(filme.imdb_id);
             }
 
@@ -39,19 +42,44 @@ export default class ModalFilme extends React.Component {
         }
     }
 
-    carregarPopCorn = async(imdb) => {
+    carregarPopCorn = async (imdb) => {
         try {
             const popCorn = await getRequest("/filmes/popcorn/" + imdb);
 
             this.setState({ popCorn: popCorn });
-        }catch(e) {
+        } catch (e) {
+            checarErro(e.response);
+        }
+    }
+
+    carregarHorariosEmCartaz = async (imdb) => {
+        try {
+            const horarios = await getRequest('/filme-em-cartaz/' + imdb);
+            const cinemas = [];
+
+            horarios.forEach((h) => {
+                const index = cinemas.findIndex(e => e.nome === h.cinema.nome);
+
+                if (index > -1) {
+                    cinemas[index].horarios.push(h);
+                } else
+                    cinemas.push({
+                        nome: h.cinema.nome,
+                        horarios: [h]
+                    });
+            });
+
+            console.log(cinemas);
+
+            this.setState({ emCartaz: cinemas });
+        } catch (e) {
             checarErro(e.response);
         }
     }
 
     downloadMagnetico = () => {
         let torrent = null;
-        if(this.state.popCorn.torrents.en["1080p"] != null)
+        if (this.state.popCorn.torrents.en["1080p"] != null)
             torrent = this.state.popCorn.torrents.en["1080p"];
         else
             torrent = this.state.popCorn.torrents.en["720p"];
@@ -119,7 +147,7 @@ export default class ModalFilme extends React.Component {
                                                 <strong>Duração</strong>
                                                 <div>
                                                     {this.state.filme.runtime}m
-                                            </div>
+                                                </div>
                                             </div>
 
                                             <div className="col-md-3 text-center">
@@ -150,6 +178,40 @@ export default class ModalFilme extends React.Component {
                                         </div>
                                     </div>
                                 </div>
+
+                                {this.state.emCartaz.length > 0 &&
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <hr style={{ width: '100%' }} />
+                                        </div>
+
+                                        <div className="col-md-12">
+                                            <strong>Em Cartaz</strong>
+                                            <div className="row">
+                                                {this.state.emCartaz.map(cinema => (
+                                                    <div className="col-md-4">
+                                                        <UncontrolledButtonDropdown key={cinema.nome} group>
+                                                            <DropdownToggle caret color="neutral" data-toggle="dropdown"
+                                                                className="btn-sm">
+                                                                {cinema.nome}
+                                                            </DropdownToggle>
+                                                            <DropdownMenu>
+                                                                {cinema.horarios.map(hora => (
+                                                                    <>
+                                                                        <DropdownItem>
+                                                                            {hora.tipoFilme} | {hora.inicio} - {hora.fim}
+                                                                        </DropdownItem>
+                                                                        <DropdownItem divider />
+                                                                    </>
+                                                                ))}
+                                                            </DropdownMenu>
+                                                        </UncontrolledButtonDropdown>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
 
                                 <div className="row">
                                     <div className="col-md-12">
