@@ -2,10 +2,10 @@ import React from 'react';
 import Skeleton from 'react-skeleton-loader';
 
 const SkeletonLoaderModal = () => (
-    <div style={{marginBottom: '3em'}}>
+    <div>
         <div className="row">
-            <div className="col-md-4">
-                <Skeleton width={'100%'} />
+            <div className="col-md-4 text-center" style={{minHeight: '270px'}}>
+                <Skeleton width={'80%'} />
             </div>
 
             <div className="col-md-8">
@@ -23,8 +23,10 @@ const SkeletonLoaderModal = () => (
             <div className="col-md-12">
                 <hr style={{ width: '100%' }} />
             </div>
+        </div>
 
-            <div className="col-md-6">
+        <div className="row">
+            <div className="col-md-6" style={{marginBottom: '2em'}}>
                 <strong>Trailer</strong><br/>
                 <Skeleton width={'100%'} />
             </div>

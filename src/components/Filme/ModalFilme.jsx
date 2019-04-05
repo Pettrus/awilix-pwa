@@ -69,8 +69,6 @@ export default class ModalFilme extends React.Component {
                     });
             });
 
-            console.log(cinemas);
-
             this.setState({ emCartaz: cinemas });
         } catch (e) {
             checarErro(e.response);
@@ -134,7 +132,7 @@ export default class ModalFilme extends React.Component {
                                         <hr style={{ width: '100%' }} />
 
                                         <div className="row">
-                                            <div className="col-md-5 text-center">
+                                            <div className="col-4 col-md-5 text-center">
                                                 <strong>Lançamento</strong>
                                                 <div>
                                                     <Moment format="DD/MM/YYYY">
@@ -143,14 +141,14 @@ export default class ModalFilme extends React.Component {
                                                 </div>
                                             </div>
 
-                                            <div className="col-md-4 text-center">
+                                            <div className="col-4 col-md-4 text-center">
                                                 <strong>Duração</strong>
                                                 <div>
                                                     {this.state.filme.runtime}m
                                                 </div>
                                             </div>
 
-                                            <div className="col-md-3 text-center">
+                                            <div className="col-4 col-md-3 text-center">
                                                 <strong>Nota</strong>
                                                 <div>
                                                     {this.state.filme.vote_average}
@@ -189,20 +187,20 @@ export default class ModalFilme extends React.Component {
                                             <strong>Em Cartaz</strong>
                                             <div className="row">
                                                 {this.state.emCartaz.map(cinema => (
-                                                    <div className="col-md-4">
-                                                        <UncontrolledButtonDropdown key={cinema.nome} group>
+                                                    <div key={cinema.nome} className="col-md-4">
+                                                        <UncontrolledButtonDropdown group>
                                                             <DropdownToggle caret color="neutral" data-toggle="dropdown"
                                                                 className="btn-sm">
                                                                 {cinema.nome}
                                                             </DropdownToggle>
                                                             <DropdownMenu>
-                                                                {cinema.horarios.map(hora => (
-                                                                    <>
+                                                                {cinema.horarios.map((hora, index) => (
+                                                                    <div key={index}>
                                                                         <DropdownItem>
                                                                             {hora.tipoFilme} | {hora.inicio} - {hora.fim}
                                                                         </DropdownItem>
                                                                         <DropdownItem divider />
-                                                                    </>
+                                                                    </div>
                                                                 ))}
                                                             </DropdownMenu>
                                                         </UncontrolledButtonDropdown>

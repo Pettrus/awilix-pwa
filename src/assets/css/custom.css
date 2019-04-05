@@ -51,8 +51,9 @@ option {
     background: #251747 !important;
 }
 
-.modal-dialog {
-    margin-top: -10em !important;
+.modal.show .modal-dialog {
+    -webkit-transform: translate(0, 40px) !important;
+    transform: translate(0, 40px) !important;
 }
 
 .botao-topo-pagina {
