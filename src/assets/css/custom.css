@@ -75,3 +75,13 @@ html, body {
     margin-top: 20vh;
     box-shadow: 0 20px 21px black;
 }
+
+.horario {
+    border: 0.5px solid #C0C0C0;
+    margin-left: 5px;
+}
+
+.modal-horarios {
+    max-height: 75vh;
+    overflow-y: auto;
+}

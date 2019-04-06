@@ -6,7 +6,9 @@ import { getRequest, getUsuarioLogado } from '../../services/Api';
 import SkeletonLoaderModal from '../../components/Filme/SkeletonLoaderModal';
 import PosterFilme from './PosterFilme';
 import { checarErro } from '../../services/Mensagem';
-import { DropdownToggle, DropdownMenu, DropdownItem, UncontrolledButtonDropdown } from 'reactstrap';
+import EmCartaz from './EmCartaz';
+
+const modalRef = React.createRef();
 
 export default class ModalFilme extends React.Component {
     state = {
@@ -166,9 +168,17 @@ export default class ModalFilme extends React.Component {
                                                 </a>
                                             </div>
 
+                                            {this.state.emCartaz.length > 0 &&
+                                                <div className="col-4 text-center">
+                                                    <button className="btn btn-warning" onClick={() => modalRef.current.toggleModal()}>
+                                                        Cinemas
+                                                    </button>
+                                                </div>
+                                            }
+
                                             {this.state.popCorn.torrents != null && this.state.popCorn.torrents.en != null &&
                                                 <div id="download" className="col-4 text-center">
-                                                    <button className="btn btn-info" onClick={() => this.downloadMagnetico()}>
+                                                    <button type="button" className="btn btn-info" onClick={() => this.downloadMagnetico()}>
                                                         <span>Download</span>
                                                     </button>
                                                 </div>
@@ -176,40 +186,6 @@ export default class ModalFilme extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-
-                                {this.state.emCartaz.length > 0 &&
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <hr style={{ width: '100%' }} />
-                                        </div>
-
-                                        <div className="col-md-12">
-                                            <strong>Em Cartaz</strong>
-                                            <div className="row">
-                                                {this.state.emCartaz.map(cinema => (
-                                                    <div key={cinema.nome} className="col-md-4">
-                                                        <UncontrolledButtonDropdown group>
-                                                            <DropdownToggle caret color="neutral" data-toggle="dropdown"
-                                                                className="btn-sm">
-                                                                {cinema.nome}
-                                                            </DropdownToggle>
-                                                            <DropdownMenu>
-                                                                {cinema.horarios.map((hora, index) => (
-                                                                    <div key={index}>
-                                                                        <DropdownItem>
-                                                                            {hora.tipoFilme} | {hora.inicio} - {hora.fim}
-                                                                        </DropdownItem>
-                                                                        <DropdownItem divider />
-                                                                    </div>
-                                                                ))}
-                                                            </DropdownMenu>
-                                                        </UncontrolledButtonDropdown>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
 
                                 <div className="row">
                                     <div className="col-md-12">
@@ -254,6 +230,8 @@ export default class ModalFilme extends React.Component {
                         Fechar
                     </Button>
                 </div>
+
+                <EmCartaz ref={modalRef} cinemas={this.state.emCartaz}></EmCartaz>
 
                 <div id="lista"></div>
             </Modal>

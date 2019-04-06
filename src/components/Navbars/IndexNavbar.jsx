@@ -6,6 +6,7 @@ import {
     NavbarBrand,
     Navbar,
     Nav,
+    NavLink,
     NavItem,
     Button,
     Container,
@@ -80,12 +81,6 @@ class ComponentsNavbar extends React.Component {
         });
     }
 
-    scrollToDownload = () => {
-        document
-            .getElementById("download-section")
-            .scrollIntoView({ behavior: "smooth" });
-    }
-
     sair = () => {
         localStorage.removeItem("auth");
         localStorage.removeItem("usuario");
@@ -96,6 +91,11 @@ class ComponentsNavbar extends React.Component {
     atualizarUsuario = () => {
         const usuario = JSON.parse(localStorage.getItem("usuario"));
         this.setState({ usuario: usuario });
+    }
+
+    abrirModalLogin = () => {
+        this.setState({ collapseOpen: false });
+        modalRef.current.toggleModal();
     }
 
     render() {
@@ -162,13 +162,16 @@ class ComponentsNavbar extends React.Component {
                                 </div>
                             ) : (
                                 <Nav navbar>
-                                    <NavItem>
-                                        <Button
-                                            className="nav-link d-none d-lg-block"
-                                            color="default"
-                                            onClick={() => modalRef.current.toggleModal()}>
+                                    <NavItem className="p-0">
+                                        <NavLink
+                                            data-placement="bottom"
+                                            rel="noopener noreferrer"
+                                            title="Faça login"
+                                            className="pointer"
+                                            onClick={() => this.abrirModalLogin()}>
+
                                             <i className="tim-icons icon-lock-circle" /> Login
-                                        </Button>
+                                        </NavLink>
                                     </NavItem>
                                 </Nav>
                             )}
