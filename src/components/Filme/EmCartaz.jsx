@@ -3,7 +3,39 @@ import { Modal } from 'reactstrap';
 
 export default class EmCartaz extends React.Component {
     state = {
-        modal: false
+        modal: false,
+        cinemas: []
+    }
+
+    componentDidUpdate() {
+        if (this.state.cinemas.length === 0 && this.props.cinemas.length > 0) {
+            console.log("RODOU");
+            const cFormatados = this.props.cinemas;
+
+            for (let i = 0; i < cFormatados.length; i++) {
+                const tipos = [];
+
+                for (let z = 0; z < cFormatados[i].horarios.length; z++) {
+                    if (!tipos.some(e => e.nome === cFormatados[i].horarios[z].tipoFilme)) {
+                        const tipo = {
+                            nome: cFormatados[i].horarios[z].tipoFilme,
+                            inicios: [
+                                cFormatados[i].horarios[z].inicio
+                            ]
+                        }
+
+                        tipos.push(tipo);
+                    } else {
+                        const index = tipos.findIndex(e => e.nome === cFormatados[i].horarios[z].tipoFilme);
+                        tipos[index].inicios.push(cFormatados[i].horarios[z].inicio);
+                    }
+                }
+
+                cFormatados[i].tipos = tipos;
+            }
+
+            this.setState({ cinemas: cFormatados });
+        }
     }
 
     toggleModal = () => {
@@ -28,17 +60,20 @@ export default class EmCartaz extends React.Component {
                 </div>
 
                 <div className="modal-body modal-horarios">
-                    {this.props.cinemas.map((cinema) => (
+                    {this.state.cinemas.map((cinema) => (
                         <div key={cinema.nome}>
                             {cinema.nome}
-                            {cinema.horarios.map((horario, index) => (
-                                <div key={index} style={{marginLeft: '10px'}}>
+                            {cinema.tipos.map((tipo, index) => (
+                                <div key={index} style={{ marginLeft: '10px' }}>
                                     <span className="badge-default badge badge-secondary">
-                                        {horario.tipoFilme}
+                                        {tipo.nome}
                                     </span>
-                                    <span className="badge-neutral badge badge-secondary horario">
-                                        {horario.inicio}
-                                    </span>
+
+                                    {tipo.inicios.map((horario, index) => (
+                                        <span key={index} className="badge-neutral badge badge-secondary horario">
+                                            {horario}
+                                        </span>
+                                    ))}
                                 </div>
                             ))}
 
