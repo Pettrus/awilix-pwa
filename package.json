@@ -1,54 +1,32 @@
 {
-  "name": "awilix",
+  "name": "shards-dashboard-lite-react",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Pettrus/awilix-pwa"
-  },
-  "keywords": [
-    "react",
-    "reactjs",
-    "design",
-    "design-react",
-    "system",
-    "system-react"
-  ],
-  "author": "Pettrus Sherlock",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Pettrus/awilix-pwa/issues"
-  },
+  "private": true,
+  "homepage": "./",
   "dependencies": {
-    "axios": "^0.18.0",
-    "classnames": "2.2.6",
-    "moment": "^2.24.0",
-    "node-sass": "4.11.0",
-    "nouislider": "13.1.1",
-    "perfect-scrollbar": "1.4.0",
-    "react": "16.8.3",
-    "react-bootstrap-switch": "15.5.3",
-    "react-dom": "16.8.3",
-    "react-infinite-scroller": "^1.2.4",
-    "react-lazy-load-image-component": "^1.3.2",
-    "react-loading": "^2.0.3",
-    "react-moment": "^0.8.4",
-    "react-router-dom": "4.3.1",
-    "react-scripts": "2.1.5",
-    "react-skeleton-loader": "^1.0.4",
-    "react-test-renderer": "^16.8.5",
-    "react-toastify": "^4.5.2",
-    "reactstrap": "7.1.0"
+    "camelize": "^1.0.0",
+    "chart.js": "^2.7.3",
+    "classnames": "^2.2.6",
+    "cross-env": "^5.2.0",
+    "dateformat": "^3.0.3",
+    "flux": "^3.1.3",
+    "lodash.find": "^4.6.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-ga": "^2.5.6",
+    "react-quill": "^1.3.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-toastify": "^5.0.0-rc.6",
+    "shards-react": "^1.0.0",
+    "shortid": "^2.2.14"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build:prod": "cross-env REACT_APP_BASENAME=/demo/shards-dashboard-lite-react REACT_APP_GAID=UA-115105611-1 npm run build",
+    "build": "cross-env REACT_APP_BASENAME=/demo/shards-dashboard-lite-react react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "compile-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/blk-design-system-react.css",
-    "minify-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/blk-design-system-react.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/blk-design-system-react.scss src/assets/css/blk-design-system-react.css --source-map true"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -58,9 +36,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.11.2"
-  }
+  ]
 }
