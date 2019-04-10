@@ -17,7 +17,8 @@ export default () => (
       </InputGroupAddon>
       <FormInput
         className="navbar-search"
-        placeholder="Search for something..."
+        disabled
+        placeholder="Pesquisar filme..."
       />
     </InputGroup>
   </Form>

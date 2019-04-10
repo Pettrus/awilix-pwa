@@ -1,17 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Poster = ({ filme }) => (
+const Poster = ({ imagem, shadow }) => (
     <img
-      alt={filme.imdbId}
-      src={filme.imagem}
-      className={'image-responsive'} />
+        alt={imagem}
+        src={imagem}
+        className={'image-responsive ' + (shadow ? 'poster pointer' : '')} />
 );
-
-Poster.propTypes = {
-    filme: PropTypes.shape({
-        imagem: PropTypes.string
-    }).isRequired
-}
 
 export default Poster;

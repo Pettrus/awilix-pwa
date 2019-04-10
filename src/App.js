@@ -7,6 +7,8 @@ import withTracker from "./withTracker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/shards-dashboards.1.1.0.min.css";
 import "./assets/custom.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default () => (
   <Router basename={process.env.REACT_APP_BASENAME || ""}>
@@ -27,6 +29,8 @@ export default () => (
           />
         );
       })}
+
+      <ToastContainer />
     </div>
   </Router>
 );
