@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+html, body, .route {
+    min-height: 100%;
+    background-color: #363636 !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.poster {
+    box-shadow: 0 0 20px black
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+    
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.tabs li.is-active a {
+    border-bottom-color: #47b135 !important;
+    color: #5CC849 !important;
+}

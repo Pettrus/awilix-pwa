@@ -1,0 +1,41 @@
+.route {
+    padding-left: 1em;
+    padding-right:1em;
+    padding-top: 0.5em;
+}
+
+.preview {
+    background-color: #262626;
+    color: #999999 !important;
+}
+
+.preview h1 {
+    color: white;
+}
+
+.preview span {
+    color: white;
+    padding: 1em;
+}
+
+.preview .buttons {
+    margin-top: 3em;
+}
+
+.imagem-preview {
+    object-fit: cover;
+    width: 100%;
+    height: 30em;
+}
+
+.tabs ul {
+    border-bottom-style: none !important;
+}
+
+.tabs ul li a {
+    color: white;
+}
+
+.tabs li.is-active {
+    border-bottom: 1px solid #262626;
+}

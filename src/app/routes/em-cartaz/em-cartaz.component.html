@@ -1,0 +1,74 @@
+<div class="route">
+    <div class="columns is-mobile is-multiline" *ngIf="filmes.length > 0">
+        <ng-container *ngFor="let filme of filmes; let i = index">
+            <div [id]="i" class="column is-6-mobile is-4-tablet is-2-desktop is-2-widescreen is-2-fullhd"
+                (click)="abrirPreview(filme, i)">
+                <img [src]="'https://image.tmdb.org/t/p/w300' + filme.poster" class="poster pointer"
+                    [alt]="filme.nome" />
+            </div>
+
+
+            <div [id]="'preview-' + i" class="columns is-multiline is-gapless preview" *ngIf="i == preview.index">
+                <div class="column is-5-fullhd">
+                    <div class="column is-12">
+                        <h1 class="title has-text-centered">{{preview.titulo}}</h1>
+
+                        <div class="tabs is-centered" style="">
+                            <ul>
+                                <li [ngClass]="{'is-active': preview.visualizacao == 'sinopse'}">
+                                    <a [routerLink]="" (click)="trocarVisualizacao('sinopse')">Poster</a>
+                                </li>
+                                <li [ngClass]="{'is-active': preview.visualizacao == 'horarios'}">
+                                    <a [routerLink]="" (click)="trocarVisualizacao('horarios')">Horários</a>
+                                </li>
+                                <li [ngClass]="{'is-active': preview.visualizacao == 'trailer'}">
+                                    <a [routerLink]="" (click)="trocarVisualizacao('trailer')">Trailer</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="has-text-centered is-size-5" style="margin-bottom: 1em;">
+                        <span title="Duração">{{preview.duracao}} min</span>
+
+                        <span title="Nota">{{preview.nota}}&#9733;</span>
+
+                        <span title="Data de lançamento">{{preview.dataLancamento | date: 'dd/MM/yyyy'}}</span>
+                    </div>
+
+                    <p style="margin-left: 1em;margin-right: 1em;">
+                        {{preview.descricao}}
+                    </p>
+                </div>
+
+                <div class="column is-7-fullhd">
+                    <div *ngIf="preview.visualizacao == 'sinopse'">
+                        <img [src]="'https://image.tmdb.org/t/p/w1280' + preview.backdrop" class="imagem-preview"
+                            [alt]="preview.nome" />
+                    </div>
+
+                    <div class="columns" *ngIf="preview.visualizacao == 'horarios'" style="margin-top: 0.3em;">
+                        <div class="column is-4" *ngFor="let cinema of preview.cinemas">
+                            <div>
+                                <h2 class="is-size-5" style="color:white;">{{cinema.nome}}</h2>
+                                <div *ngFor="let key of keys(cinema)" style="margin-left: 1em;">
+                                    {{key}}
+                                    <div style="margin-left:1em;">
+                                        <span *ngFor="let horario of cinema[key]" style="padding: 0.2em;">
+                                            {{horario.hora}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="video-container" *ngIf="preview.visualizacao == 'trailer'">
+                        <iframe title="Trailer" width="853" height="280" allowFullScreen
+                            [src]="limparUrl('https://www.youtube.com/embed/' + preview.trailer)"></iframe>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
