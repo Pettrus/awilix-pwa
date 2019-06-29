@@ -12,11 +12,13 @@ export class EmCartazComponent implements OnInit {
 
     public filmes: Array<any> = [];
     public preview: any = {};
+    public carregando: boolean = false;
 
     constructor(private api: ApiService, public sanitizer: DomSanitizer) {}
 
     async ngOnInit() {
         try {
+            this.carregando = true;
             this.filmes = await this.api.get("cinema");
 
             for(let filme of this.filmes) {
@@ -39,6 +41,8 @@ export class EmCartazComponent implements OnInit {
             }
         }catch(e) {
             console.log(e);
+        }finally {
+            this.carregando = false;
         }
     }
 
@@ -64,6 +68,10 @@ export class EmCartazComponent implements OnInit {
                 behavior: 'smooth'
             });
         }, 500);
+    }
+
+    fecharPreview() {
+        this.preview = {};
     }
 
     trocarVisualizacao(tipo) {

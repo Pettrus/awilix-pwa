@@ -7,7 +7,8 @@ import { NavComponent } from './nav/nav.component';
 import { EmCartazComponent } from './routes/em-cartaz/em-cartaz.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment'; 
+import { environment } from '../environments/environment';
+import { SnackbarModule } from 'ngx-snackbar';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { environment } from '../environments/environment';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    SnackbarModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

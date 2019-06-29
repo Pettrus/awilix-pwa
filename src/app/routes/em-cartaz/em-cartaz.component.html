@@ -1,5 +1,12 @@
 <div class="route">
-    <div class="columns is-mobile is-multiline" *ngIf="filmes.length > 0">
+    <div class="columns is-mobile is-multiline" *ngIf="carregando">
+        <div *ngFor="let a of [].constructor(12)" 
+            class="column is-6-mobile is-4-tablet is-2-desktop is-2-widescreen is-2-fullhd">
+            <div class="skeleton-loader"></div>
+        </div>
+    </div>
+
+    <div class="columns is-mobile is-multiline" *ngIf="!carregando && filmes.length > 0">
         <ng-container *ngFor="let filme of filmes; let i = index">
             <div [id]="i" class="column is-6-mobile is-4-tablet is-2-desktop is-2-widescreen is-2-fullhd"
                 (click)="abrirPreview(filme, i)">
@@ -11,7 +18,11 @@
             <div [id]="'preview-' + i" class="columns is-multiline is-gapless preview" *ngIf="i == preview.index">
                 <div class="column is-5-fullhd">
                     <div class="column is-12">
-                        <h1 class="title has-text-centered">{{preview.titulo}}</h1>
+                        <div>
+                            <span class="is-size-4 pointer" style="padding: 0px;"
+                                (click)="fecharPreview()">&#10005;</span>
+                            <h1 class="title has-text-centered">{{preview.titulo}}</h1>
+                        </div>
 
                         <div class="tabs is-centered" style="">
                             <ul>
@@ -29,14 +40,24 @@
                     </div>
 
                     <div class="has-text-centered is-size-5" style="margin-bottom: 1em;">
-                        <span title="Duração">{{preview.duracao}} min</span>
+                        <span title="Duração">{{preview.duracao}}
+                            <span class="contraste">min</span>
+                        </span>
 
-                        <span title="Nota">{{preview.nota}}&#9733;</span>
+                        <span title="Nota">{{preview.nota}}
+                            <span class="contraste">&#9733;</span>
+                        </span>
 
-                        <span title="Data de lançamento">{{preview.dataLancamento | date: 'dd/MM/yyyy'}}</span>
+                        <span title="Data de lançamento">
+                            {{preview.dataLancamento | date: 'dd'}}
+                            <span class="contraste">/</span>
+                            {{preview.dataLancamento | date: 'MM'}}
+                            <span class="contraste">/</span>
+                            {{preview.dataLancamento | date: 'yyyy'}}
+                        </span>
                     </div>
 
-                    <p style="margin-left: 1em;margin-right: 1em;">
+                    <p style="margin-left: 1em;margin-right: 1em;margin-bottom: 1em;">
                         {{preview.descricao}}
                     </p>
                 </div>
@@ -47,11 +68,12 @@
                             [alt]="preview.nome" />
                     </div>
 
-                    <div class="columns" *ngIf="preview.visualizacao == 'horarios'" style="margin-top: 0.3em;">
+                    <div class="columns is-multiline" *ngIf="preview.visualizacao == 'horarios'"
+                        style="margin-left: 1em;margin-top: 0.3em;">
                         <div class="column is-4" *ngFor="let cinema of preview.cinemas">
                             <div>
                                 <h2 class="is-size-5" style="color:white;">{{cinema.nome}}</h2>
-                                <div *ngFor="let key of keys(cinema)" style="margin-left: 1em;">
+                                <div *ngFor="let key of keys(cinema)" style="margin-left: 1em;color: #5CC849;">
                                     {{key}}
                                     <div style="margin-left:1em;">
                                         <span *ngFor="let horario of cinema[key]" style="padding: 0.2em;">

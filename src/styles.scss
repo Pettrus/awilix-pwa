@@ -31,3 +31,16 @@ html, body, .route {
     border-bottom-color: #47b135 !important;
     color: #5CC849 !important;
 }
+
+.snack {
+    border: 3px solid #47b135 !important;
+    border-radius: 10px !important;
+}
+
+.skeleton-loader {
+    width: 100% !important;
+    height: 20em !important;
+    border-radius: 5px !important;
+    background-color: #262626 !important;
+    border-color: #262626 !important;
+}

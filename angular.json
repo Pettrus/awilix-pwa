@@ -30,7 +30,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/bulma/css/bulma.css"
+              "node_modules/bulma/css/bulma.css",
+              "node_modules/ngx-snackbar/bundles/style.css"
             ],
             "scripts": []
           },
