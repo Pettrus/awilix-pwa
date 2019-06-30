@@ -3,6 +3,9 @@ import { ApiService } from 'src/app/service/api.service';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { GlobalsService } from '../../service/globals.service';
+import { UtilService } from '../../service/util.service';
+
 @Component({
     selector: 'app-em-cartaz',
     templateUrl: './em-cartaz.component.html',
@@ -14,7 +17,8 @@ export class EmCartazComponent implements OnInit {
     public preview: any = {};
     public carregando: boolean = false;
 
-    constructor(private api: ApiService, public sanitizer: DomSanitizer) {}
+    constructor(private api: ApiService, public sanitizer: DomSanitizer,
+        private globals: GlobalsService, private util: UtilService) {}
 
     async ngOnInit() {
         try {
@@ -38,6 +42,15 @@ export class EmCartazComponent implements OnInit {
                         filme.cinemas[index][horario.tipoFilme].push({ hora: horario.inicio });
                     }
                 }
+            }
+
+            const data = new Date();
+
+            if(!this.globals.online && parseInt(localStorage.getItem("diaAtualizacao")) != data.getDate()) {
+                this.util.removerTodosSnackBar();
+                this.util.mostrarSnackAtualizar();
+            }else {
+                localStorage.setItem("diaAtualizacao", data.getDate().toString());
             }
         }catch(e) {
             console.log(e);

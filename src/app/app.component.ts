@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SnackbarService } from 'ngx-snackbar';
 import { ConnectionService } from 'ng-connection-service';
+import { GlobalsService } from './service/globals.service';
+import { UtilService } from './service/util.service';
 
 @Component({
     selector: 'app-root',
@@ -9,24 +10,23 @@ import { ConnectionService } from 'ng-connection-service';
 })
 export class AppComponent implements OnInit {
 
-    constructor(private snackbarService: SnackbarService, private connectionService: ConnectionService) { }
+    constructor(private connectionService: ConnectionService,
+        private globals: GlobalsService, private util: UtilService) { }
+    
+    
 
     ngOnInit() {
         let snackBarId = null;
+
+        if(!this.globals.online)
+            snackBarId = this.util.mostrarSnackOffline();
+        
         this.connectionService.monitor().subscribe(isConnected => {
+            this.globals.online = isConnected;
             if (!isConnected) {
-                this.snackbarService.add({
-                    msg: 'Sem conexão com a internet.',
-                    color: "#FFF",
-                    action: {
-                        text: null
-                    },
-                    onAdd: (snack) => {
-                        snackBarId = snack.id;
-                    },
-                });
+                snackBarId = this.util.mostrarSnackOffline();
             }else {
-                this.snackbarService.remove(snackBarId);
+                this.util.removerSnackBar(snackBarId);
             }
         });
     }
