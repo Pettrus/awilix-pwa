@@ -16,16 +16,27 @@ export class EmCartazComponent implements OnInit {
     public filmes: Array<any> = [];
     public preview: any = {};
     public carregando: boolean = false;
+    public carregarImagem: boolean = true;
 
     constructor(private api: ApiService, public sanitizer: DomSanitizer,
         private globals: GlobalsService, private util: UtilService) {}
 
-    async ngOnInit() {
+    ngOnInit() {
+        this.listarFilmes();
+
+        this.globals.atualizarFilmes.subscribe((atualizar) => {
+            this.listarFilmes();
+        });
+    }
+
+    async listarFilmes() {
         try {
             this.carregando = true;
-            this.filmes = await this.api.get("cinema");
+            this.filmes = await this.api.get("filmes");
 
             for(let filme of this.filmes) {
+                filme.detalhes = filme.detalhes[0];
+
                 filme.cinemas = [];
                 for(let horario of filme.horarios) {
                     if (!filme.cinemas.some(e => e.nome === horario.cinema.nome)) {
@@ -49,6 +60,7 @@ export class EmCartazComponent implements OnInit {
             if(!this.globals.online && parseInt(localStorage.getItem("diaAtualizacao")) != data.getDate()) {
                 this.util.removerTodosSnackBar();
                 this.util.mostrarSnackAtualizar();
+                this.globals.desatualizado = true;
             }else {
                 localStorage.setItem("diaAtualizacao", data.getDate().toString());
             }
@@ -62,7 +74,8 @@ export class EmCartazComponent implements OnInit {
     abrirPreview(filme, index) {
         this.preview = filme;
         this.preview.visualizacao = 'sinopse';
-        let coluna
+        let coluna;
+        this.carregarImagem = true;
 
         if(window.innerWidth >= 1024) 
             coluna = 6;
@@ -75,11 +88,7 @@ export class EmCartazComponent implements OnInit {
         
         this.preview.index = (soma > this.filmes.length ? this.filmes.length - 1 : soma);
         setTimeout(() => {
-            document.getElementById("preview-" + this.preview.index).scrollIntoView({
-                block: "end",
-                inline: "nearest",
-                behavior: 'smooth'
-            });
+            this.util.scrollParaDiv("preview-" + this.preview.index, "end");
         }, 500);
     }
 
@@ -89,6 +98,9 @@ export class EmCartazComponent implements OnInit {
 
     trocarVisualizacao(tipo) {
         this.preview.visualizacao = tipo;
+        setTimeout(() => {
+            this.util.scrollParaDiv(tipo);
+        }, 500);
     }
 
     limparUrl(url) {

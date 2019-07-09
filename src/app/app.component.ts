@@ -12,8 +12,6 @@ export class AppComponent implements OnInit {
 
     constructor(private connectionService: ConnectionService,
         private globals: GlobalsService, private util: UtilService) { }
-    
-    
 
     ngOnInit() {
         let snackBarId = null;
@@ -25,6 +23,9 @@ export class AppComponent implements OnInit {
             this.globals.online = isConnected;
             if (!isConnected) {
                 snackBarId = this.util.mostrarSnackOffline();
+            }else if(this.globals.desatualizado) {
+                this.globals.atualizarFilmes.emit(true);
+                this.util.removerTodosSnackBar();
             }else {
                 this.util.removerSnackBar(snackBarId);
             }

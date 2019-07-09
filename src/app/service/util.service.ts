@@ -45,4 +45,12 @@ export class UtilService {
     removerTodosSnackBar() {
         this.snackbarService.clear();
     }
+
+    scrollParaDiv(idDiv, block?, inline? ,behavior?) {
+        document.getElementById(idDiv).scrollIntoView({
+            block: block != null ? block : "start",
+            inline: inline != null ? inline : "nearest",
+            behavior: behavior != null ? behavior : 'smooth'
+        });
+    }
 }

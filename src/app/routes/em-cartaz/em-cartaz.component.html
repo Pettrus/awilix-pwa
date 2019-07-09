@@ -10,7 +10,7 @@
         <ng-container *ngFor="let filme of filmes; let i = index">
             <div [id]="i" class="column is-6-mobile is-4-tablet is-2-desktop is-2-widescreen is-2-fullhd"
                 (click)="abrirPreview(filme, i)">
-                <img [src]="'https://image.tmdb.org/t/p/w300' + filme.poster" class="poster pointer"
+                <img [src]="'https://image.tmdb.org/t/p/w300' + filme.detalhes.poster" class="poster pointer"
                     [alt]="filme.nome" />
             </div>
 
@@ -21,10 +21,10 @@
                         <div>
                             <span class="is-size-4 pointer" style="padding: 0px;"
                                 (click)="fecharPreview()">&#10005;</span>
-                            <h1 class="title has-text-centered">{{preview.titulo}}</h1>
+                            <h1 class="title has-text-centered">{{preview.detalhes.titulo}}</h1>
                         </div>
 
-                        <div class="tabs is-centered" style="">
+                        <div class="tabs is-centered">
                             <ul>
                                 <li [ngClass]="{'is-active': preview.visualizacao == 'sinopse'}">
                                     <a [routerLink]="" (click)="trocarVisualizacao('sinopse')">Poster</a>
@@ -58,17 +58,17 @@
                     </div>
 
                     <p style="margin-left: 1em;margin-right: 1em;margin-bottom: 1em;">
-                        {{preview.descricao}}
+                        {{preview.detalhes.descricao}}
                     </p>
                 </div>
 
                 <div class="column is-7-fullhd">
-                    <div *ngIf="preview.visualizacao == 'sinopse'">
-                        <img [src]="'https://image.tmdb.org/t/p/w1280' + preview.backdrop" class="imagem-preview"
-                            [alt]="preview.nome" />
+                    <div id="sinopse" *ngIf="preview.visualizacao == 'sinopse'">
+                        <img [src]="'https://image.tmdb.org/t/p/w1280' + preview.detalhes.backdrop" class="imagem-preview"
+                            [alt]="preview.nome" (error)="carregarImagem = false" *ngIf="carregarImagem" />
                     </div>
 
-                    <div class="columns is-multiline" *ngIf="preview.visualizacao == 'horarios'"
+                    <div id="horarios" class="columns is-multiline" *ngIf="preview.visualizacao == 'horarios'"
                         style="margin-left: 1em;margin-top: 0.3em;">
                         <div class="column is-4" *ngFor="let cinema of preview.cinemas">
                             <div>
@@ -85,9 +85,9 @@
                         </div>
                     </div>
 
-                    <div class="video-container" *ngIf="preview.visualizacao == 'trailer'">
+                    <div id="trailer" class="video-container" *ngIf="preview.visualizacao == 'trailer'">
                         <iframe title="Trailer" width="853" height="280" allowFullScreen
-                            [src]="limparUrl('https://www.youtube.com/embed/' + preview.trailer)"></iframe>
+                            [src]="limparUrl('https://www.youtube.com/embed/' + preview.detalhes.trailer)"></iframe>
                     </div>
                 </div>
             </div>
