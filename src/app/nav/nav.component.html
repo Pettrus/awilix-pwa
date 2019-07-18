@@ -1,9 +1,53 @@
 <nav class="navbar is-black">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-
             <img src="/assets/logo.png" alt="Logo" style="margin-left: 1em;" width="112" height="28">
+        </a>
 
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" (click)="toggleBurger()">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
         </a>
     </div>
+
+    <div id="navMenu" class="navbar-menu" [ngClass]="{'is-active' : burger }">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <button (click)="toggleModal()" class="button is-primary">
+                        <strong>Lançamentos</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </nav>
+
+<div class="modal" [ngClass]="{'is-active': modal}">
+    <div class="modal-background" (click)="toggleModal()"></div>
+    <div class="modal-card">
+        <section class="modal-card-body" style="background-color: #363636;color: #ffffff;">
+            <div class="has-text-centered" style="margin-bottom: 1em;">
+                Cadastre seu email para ser informado quando novos filmes forem lançados!
+            </div>
+
+            <form (ngSubmit)="cadastrarEmail()">
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="email" placeholder="Email" [(ngModel)]="email" name="email">
+
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="is-centered has-text-centered">
+                    <button class="button is-primary" type="submit" [disabled]="carregando">Cadastrar</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="toggleModal()"></button>
+</div>
