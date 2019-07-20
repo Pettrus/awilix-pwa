@@ -25,7 +25,7 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     SnackbarModule.forRoot(),
     FormsModule,
-    SnotifyModule
+    SnotifyModule,
   ],
   providers: [
     { provide: 'SnotifyToastConfig', useValue: ToastDefaults},

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { UtilService } from 'src/app/service/util.service';
+import { GlobalsService } from '../service/globals.service';
 
 @Component({
     selector: 'app-nav',
@@ -14,7 +15,7 @@ export class NavComponent {
     public modal: boolean = false;
     public burger: boolean = false;
 
-    constructor(private api: ApiService, private util: UtilService) { }
+    constructor(private api: ApiService, private util: UtilService, public globals: GlobalsService) { }
 
     async cadastrarEmail() {
         try {

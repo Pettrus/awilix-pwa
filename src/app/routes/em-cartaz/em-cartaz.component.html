@@ -70,14 +70,14 @@
 
                     <div id="horarios" class="columns is-multiline" *ngIf="preview.visualizacao == 'horarios'"
                         style="margin-left: 1em;margin-top: 0.3em;">
-                        <div class="column is-4" *ngFor="let cinema of preview.cinemas">
+                        <div class="column is-4" *ngFor="let fc of preview.filmeCinemas">
                             <div>
-                                <h2 class="is-size-5" style="color:white;">{{cinema.nome}}</h2>
-                                <div *ngFor="let key of keys(cinema)" style="margin-left: 1em;color: #5CC849;">
-                                    {{key}}
+                                <h2 class="is-size-5" style="color:white;">{{fc.cinema.nome}}</h2>
+                                <div *ngFor="let horario of agruparHorarios(fc.horarios)" style="margin-left: 1em;color: #5CC849;">
+                                    {{horario.tipo}}
                                     <div style="margin-left:1em;">
-                                        <span *ngFor="let horario of cinema[key]" style="padding: 0.2em;">
-                                            {{horario.hora}}
+                                        <span *ngFor="let inicio of horario.inicio" style="padding: 0.2em;">
+                                            {{inicio}}
                                         </span>
                                     </div>
                                 </div>
