@@ -15,6 +15,10 @@ export class NavComponent {
     public modal: boolean = false;
     public burger: boolean = false;
 
+    public navMobile: boolean = true;
+
+    public cinema: string = null;
+
     constructor(private api: ApiService, private util: UtilService, public globals: GlobalsService) { }
 
     async cadastrarEmail() {
@@ -37,5 +41,20 @@ export class NavComponent {
 
     toggleBurger() {
         this.burger = !this.burger;
+    }
+
+    filtrar(cinema) {
+        this.cinema = cinema;
+        this.globals.filtrarPorCinema.emit(cinema);
+        this.toggleNavMobile();
+    }
+
+    toggleNavMobile() {
+        this.navMobile = !this.navMobile;
+
+        if(this.navMobile)
+            setTimeout(() => {
+                this.util.scrollParaDiv("filmesEmCartaz");
+            }, 150);
     }
 }

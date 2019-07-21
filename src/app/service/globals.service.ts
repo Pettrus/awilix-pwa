@@ -10,5 +10,7 @@ export class GlobalsService {
     public cinemas: Array<any> = [];
 
     public atualizarFilmes: EventEmitter<boolean> = new EventEmitter();
+    public filtrarPorCinema: EventEmitter<any> = new EventEmitter();
+
     constructor() { }
 }

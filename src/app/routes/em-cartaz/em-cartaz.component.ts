@@ -14,12 +14,13 @@ import { UtilService } from '../../service/util.service';
 export class EmCartazComponent implements OnInit {
 
     public filmes: Array<any> = [];
+    public filmesCompletos: Array<any> = [];
     public preview: any = {};
     public carregando: boolean = false;
     public carregarImagem: boolean = true;
 
     constructor(private api: ApiService, public sanitizer: DomSanitizer,
-        private globals: GlobalsService, private util: UtilService) {}
+        private globals: GlobalsService, private util: UtilService) { }
 
     ngOnInit() {
         this.listarFilmes();
@@ -27,12 +28,21 @@ export class EmCartazComponent implements OnInit {
         this.globals.atualizarFilmes.subscribe((atualizar) => {
             this.listarFilmes();
         });
+
+        this.globals.filtrarPorCinema.subscribe(cinema => {
+            this.fecharPreview();
+            if(cinema == null)
+                this.filmes = this.filmesCompletos;
+            else
+                this.filmes = this.filmesCompletos.filter(f => f.filmeCinemas.some(fc => fc.cinema.nome == cinema));
+        });
     }
 
     async listarFilmes() {
         try {
             this.carregando = true;
             this.filmes = await this.api.get("filmes");
+            this.filmesCompletos = this.filmes;
 
             this.filmes.forEach(f => {
                 f.detalhes = f.detalhes[0];
@@ -43,16 +53,16 @@ export class EmCartazComponent implements OnInit {
 
             const data = new Date();
 
-            if(!this.globals.online && parseInt(localStorage.getItem("diaAtualizacao")) != data.getDate()) {
+            if (!this.globals.online && parseInt(localStorage.getItem("diaAtualizacao")) != data.getDate()) {
                 this.util.removerTodosSnackBar();
                 this.util.mostrarSnackAtualizar();
                 this.globals.desatualizado = true;
-            }else {
+            } else {
                 localStorage.setItem("diaAtualizacao", data.getDate().toString());
             }
-        }catch(e) {
+        } catch (e) {
             this.util.verificarErro(e);
-        }finally {
+        } finally {
             this.carregando = false;
         }
     }
@@ -63,15 +73,15 @@ export class EmCartazComponent implements OnInit {
         let coluna;
         this.carregarImagem = true;
 
-        if(window.innerWidth >= 1024) 
+        if (window.innerWidth >= 1024)
             coluna = 6;
-        else if(window.innerWidth >= 769)
+        else if (window.innerWidth >= 769)
             coluna = 3;
         else
             coluna = 2;
-        
+
         let soma = index + (coluna - index % coluna) - 1;
-        
+
         this.preview.index = (soma >= this.filmes.length ? this.filmes.length - 1 : soma);
         setTimeout(() => {
             this.util.scrollParaDiv("preview-" + this.preview.index, "end");
@@ -99,9 +109,9 @@ export class EmCartazComponent implements OnInit {
         horarios.forEach((h) => {
             const obj = novo.find(f => f.tipo == h.tipoFilme);
 
-            if(obj != null) {
+            if (obj != null) {
                 obj.inicio.push(h.inicio);
-            }else {
+            } else {
                 novo.push({
                     tipo: h.tipoFilme,
                     inicio: [h.inicio]
