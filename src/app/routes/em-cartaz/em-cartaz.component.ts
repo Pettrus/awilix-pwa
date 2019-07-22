@@ -84,7 +84,7 @@ export class EmCartazComponent implements OnInit {
 
         this.preview.index = (soma >= this.filmes.length ? this.filmes.length - 1 : soma);
         setTimeout(() => {
-            this.util.scrollParaDiv("preview-" + this.preview.index, "end");
+            this.util.scrollParaDiv("preview-" + this.preview.index);
         }, 500);
     }
 
@@ -92,11 +92,12 @@ export class EmCartazComponent implements OnInit {
         this.preview = {};
     }
 
-    trocarVisualizacao(tipo) {
+    trocarVisualizacao(tipo, scroll) {
         this.preview.visualizacao = tipo;
-        setTimeout(() => {
-            this.util.scrollParaDiv(tipo);
-        }, 500);
+        if(scroll)
+            setTimeout(() => {
+                this.util.scrollParaDiv(tipo);
+            }, 500);
     }
 
     limparUrl(url) {

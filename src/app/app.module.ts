@@ -11,6 +11,9 @@ import { environment } from '../environments/environment';
 import { SnackbarModule } from 'ngx-snackbar';
 import { FormsModule } from '@angular/forms';
 import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
     SnackbarModule.forRoot(),
     FormsModule,
     SnotifyModule,
+    AngularFireAuthModule,
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     { provide: 'SnotifyToastConfig', useValue: ToastDefaults},

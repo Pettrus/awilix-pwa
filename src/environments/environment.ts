@@ -4,7 +4,16 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:8080/"
+  apiUrl: "http://localhost:8080/",
+  firebase: {
+    apiKey: "AIzaSyDQUPYzmZ7o1y4rizijent-x1TRVv6BFwU",
+    authDomain: "awilix-4d7b7.firebaseapp.com",
+    databaseURL: "https://awilix-4d7b7.firebaseio.com",
+    projectId: "awilix-4d7b7",
+    storageBucket: "",
+    messagingSenderId: "99538087008",
+    appId: "1:99538087008:web:beff26b685a0dfc8"
+  }
 };
 
 /*

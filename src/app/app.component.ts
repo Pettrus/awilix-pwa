@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from 'ng-connection-service';
 import { GlobalsService } from './service/globals.service';
 import { UtilService } from './service/util.service';
+import { MensagensPushService } from './service/mensagens-push.service';
 
 @Component({
     selector: 'app-root',
@@ -11,24 +12,30 @@ import { UtilService } from './service/util.service';
 export class AppComponent implements OnInit {
 
     constructor(private connectionService: ConnectionService,
-        private globals: GlobalsService, private util: UtilService) { }
+        private globals: GlobalsService, private util: UtilService, private messageService: MensagensPushService) { }
 
     ngOnInit() {
         let snackBarId = null;
 
-        if(!this.globals.online)
+        if (!this.globals.online)
             snackBarId = this.util.mostrarSnackOffline();
-        
+
         this.connectionService.monitor().subscribe(isConnected => {
             this.globals.online = isConnected;
             if (!isConnected) {
                 snackBarId = this.util.mostrarSnackOffline();
-            }else if(this.globals.desatualizado) {
+            } else if (this.globals.desatualizado) {
                 this.globals.atualizarFilmes.emit(true);
                 this.util.removerTodosSnackBar();
-            }else {
+            } else {
                 this.util.removerSnackBar(snackBarId);
             }
         });
+    
+        this.messageService.requestPermission();
+        this.messageService.receiveMessage();
+        let message = this.messageService.currentMessage;
+
+        console.log(message);
     }
 }

@@ -1,8 +1,17 @@
 <div id="filmesEmCartaz" class="route">
     <div class="columns is-mobile is-multiline" *ngIf="carregando">
-        <div *ngFor="let a of [].constructor(12)" 
+        <div *ngFor="let a of [].constructor(12)"
             class="column is-6-mobile is-4-tablet is-2-desktop is-2-widescreen is-2-fullhd">
             <div class="skeleton-loader"></div>
+        </div>
+    </div>
+
+    <div class="columns" style="color: white;margin-top:2em;font-size: 1.5em;" *ngIf="!carregando && filmes.length <= 0">
+        <div class="column has-text-centered">
+            <i class="fa fa-wifi" style="color: #5CC849;"></i>
+            <p>
+                Nenhum filme encontrado, verifique sua conexão com a internet
+            </p>
         </div>
     </div>
 
@@ -30,7 +39,7 @@
                                     <a [routerLink]="" (click)="trocarVisualizacao('sinopse')">Poster</a>
                                 </li>
                                 <li [ngClass]="{'is-active': preview.visualizacao == 'horarios'}">
-                                    <a [routerLink]="" (click)="trocarVisualizacao('horarios')">Horários</a>
+                                    <a [routerLink]="" (click)="trocarVisualizacao('horarios', true)">Horários</a>
                                 </li>
                                 <li [ngClass]="{'is-active': preview.visualizacao == 'trailer'}">
                                     <a [routerLink]="" (click)="trocarVisualizacao('trailer')">Trailer</a>
@@ -64,8 +73,9 @@
 
                 <div class="column is-7-fullhd">
                     <div id="sinopse" *ngIf="preview.visualizacao == 'sinopse'">
-                        <img [src]="'https://image.tmdb.org/t/p/w1280' + preview.detalhes.backdrop" class="imagem-preview"
-                            [alt]="preview.nome" (error)="carregarImagem = false" *ngIf="carregarImagem" />
+                        <img [src]="'https://image.tmdb.org/t/p/w1280' + preview.detalhes.backdrop"
+                            class="imagem-preview" [alt]="preview.nome" (error)="carregarImagem = false"
+                            *ngIf="carregarImagem" />
                     </div>
 
                     <div id="horarios" class="columns is-multiline" *ngIf="preview.visualizacao == 'horarios'"
@@ -73,7 +83,8 @@
                         <div class="column is-4" *ngFor="let fc of preview.filmeCinemas">
                             <div>
                                 <h2 class="is-size-5" style="color:white;">{{fc.cinema.nome}}</h2>
-                                <div *ngFor="let horario of agruparHorarios(fc.horarios)" style="margin-left: 1em;color: #5CC849;">
+                                <div *ngFor="let horario of agruparHorarios(fc.horarios)"
+                                    style="margin-left: 1em;color: #5CC849;">
                                     {{horario.tipo}}
                                     <div style="margin-left:1em;">
                                         <span *ngFor="let inicio of horario.inicio" style="padding: 0.2em;">
