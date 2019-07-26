@@ -43,13 +43,17 @@ export class EmCartazComponent implements OnInit {
             this.carregando = true;
             this.filmes = await this.api.get("filmes");
             this.filmesCompletos = this.filmes;
+            const cinemas = new Set();
 
             this.filmes.forEach(f => {
                 f.detalhes = f.detalhes[0];
 
-                this.globals.cinemas = [...f.filmeCinemas.map(c => c.cinema.nome)];
+                f.filmeCinemas.map(c => {
+                    cinemas.add(c.cinema.nome)
+                });
             });
-            this.globals.cinemas.sort();
+            
+            this.globals.cinemas = Array.from(cinemas).sort();
 
             const data = new Date();
 
