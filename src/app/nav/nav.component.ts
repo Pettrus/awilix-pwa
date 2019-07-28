@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { UtilService } from 'src/app/service/util.service';
 import { GlobalsService } from '../service/globals.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
     selector: 'app-nav',
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.scss']
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
 
     public email: string;
     public carregando: boolean = false;
@@ -19,16 +20,27 @@ export class NavComponent {
 
     public cinema: string = null;
 
-    constructor(private api: ApiService, private util: UtilService, public globals: GlobalsService) { }
+    public rotaAtual: string = null;
+
+    constructor(private api: ApiService, private util: UtilService, public globals: GlobalsService,
+        private router: Router) { }
+
+    ngOnInit() {
+        this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.rotaAtual = event.url;
+            }
+        });
+    }
 
     async cadastrarEmail() {
         try {
             this.carregando = true;
-            await this.api.post("feed", {email: this.email, cidade: "Fortaleza-CE"});
+            await this.api.post("feed", { email: this.email, cidade: "Fortaleza-CE" });
 
             this.util.mostrarNotificacao("Cadastro realizado com sucesso!");
             this.toggleModal();
-        } catch(e) {
+        } catch (e) {
             this.util.verificarErro(e);
         } finally {
             this.carregando = false;
@@ -52,7 +64,7 @@ export class NavComponent {
     toggleNavMobile() {
         this.navMobile = !this.navMobile;
 
-        if(this.navMobile)
+        if (this.navMobile)
             setTimeout(() => {
                 this.util.scrollParaDiv("filmesEmCartaz");
             }, 150);

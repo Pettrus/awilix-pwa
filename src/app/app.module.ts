@@ -14,12 +14,14 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { CancelarInscricaoComponent } from './routes/cancelar-inscricao/cancelar-inscricao.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    EmCartazComponent
+    EmCartazComponent,
+    CancelarInscricaoComponent
   ],
   imports: [
     BrowserModule,

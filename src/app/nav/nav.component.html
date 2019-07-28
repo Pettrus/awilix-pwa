@@ -12,7 +12,7 @@
     </div>
 
     <div id="navMenu" class="navbar-menu" [ngClass]="{'is-active' : burger }" style="background-color: #1a1a1a;">
-        <div class="navbar-start">
+        <div class="navbar-start" *ngIf="rotaAtual == '/'">
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link" style="color:white;" (click)="toggleNavMobile()" [ngClass]="{'fundo-verde': cinema != null}">
                     {{cinema == null ? 'Cinemas' : cinema}}
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="navbar-end">
+        <div class="navbar-end" *ngIf="rotaAtual == '/'">
             <div class="navbar-item">
                 <div class="buttons">
                     <button (click)="toggleModal()" class="button is-primary">
