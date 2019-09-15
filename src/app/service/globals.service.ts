@@ -11,6 +11,7 @@ export class GlobalsService {
 
     public atualizarFilmes: EventEmitter<boolean> = new EventEmitter();
     public filtrarPorCinema: EventEmitter<any> = new EventEmitter();
+    public trocarIdioma: EventEmitter<any> = new EventEmitter();
 
     constructor() { }
 }

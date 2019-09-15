@@ -69,4 +69,16 @@ export class NavComponent implements OnInit {
                 this.util.scrollParaDiv("filmesEmCartaz");
             }, 150);
     }
+
+    idiomaSelecionado() {
+        if(localStorage.getItem("idioma") == "PORTUGUES") {
+            return "Lisboa";
+        }
+
+        return "Fortaleza";
+    }
+
+    trocarIdioma() {
+        this.globals.trocarIdioma.emit(true);
+    }
 }

@@ -6,7 +6,8 @@
         </div>
     </div>
 
-    <div class="columns" style="color: white;margin-top:2em;font-size: 1.5em;" *ngIf="!carregando && filmes.length <= 0">
+    <div class="columns" style="color: white;margin-top:2em;font-size: 1.5em;"
+        *ngIf="!carregando && filmes.length <= 0">
         <div class="column has-text-centered">
             <i class="fa fa-wifi" style="color: #5CC849;"></i>
             <p>
@@ -103,5 +104,31 @@
                 </div>
             </div>
         </ng-container>
+    </div>
+</div>
+
+<div class="modal" [ngClass]="{'is-active': modal}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <section class="modal-card-body" style="background-color: #363636;color: #ffffff;">
+            <div class="has-text-centered" style="margin-bottom: 1em;">
+                Selecione a cidade
+            </div>
+
+            <form (ngSubmit)="selecionarCidade(idioma)">
+                <div class="field">
+                    <div class="select is-fullwidth">
+                        <select [(ngModel)]="idioma" name="idioma">
+                            <option value="PORTUGUES">Lisboa - Portugal</option>
+                            <option value="PORTUGUES_BRASIL">Fortaleza - Brasil</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="is-centered has-text-centered">
+                    <button class="button is-primary" type="submit">Selecionar</button>
+                </div>
+            </form>
+        </section>
     </div>
 </div>

@@ -18,30 +18,57 @@ export class EmCartazComponent implements OnInit {
     public preview: any = {};
     public carregando: boolean = false;
     public carregarImagem: boolean = true;
+    public modal: boolean = false;
+    public idioma: string = null;
 
     constructor(private api: ApiService, public sanitizer: DomSanitizer,
         private globals: GlobalsService, private util: UtilService) { }
 
     ngOnInit() {
-        this.listarFilmes();
+        const idioma = localStorage.getItem("idioma");
 
-        this.globals.atualizarFilmes.subscribe((atualizar) => {
+        if (idioma == null) {
+            this.toggleModal();
+        } else {
+            this.iniciarListagem();
+        }
+
+        this.globals.atualizarFilmes.subscribe(() => {
             this.listarFilmes();
         });
 
         this.globals.filtrarPorCinema.subscribe(cinema => {
             this.fecharPreview();
-            if(cinema == null)
+            if (cinema == null)
                 this.filmes = this.filmesCompletos;
             else
                 this.filmes = this.filmesCompletos.filter(f => f.filmeCinemas.some(fc => fc.cinema.nome == cinema));
         });
+
+        this.globals.trocarIdioma.subscribe(() => {
+            this.toggleModal();
+        });
+    }
+
+    selecionarCidade(idioma) {
+        if (idioma == null) {
+            this.util.mostrarNotificacao("Selecione a cidade", "Aviso", "warning");
+            return;
+        }
+
+        localStorage.setItem("idioma", idioma);
+        this.toggleModal();
+        this.iniciarListagem();
+    }
+
+    iniciarListagem() {
+        this.listarFilmes();
     }
 
     async listarFilmes() {
         try {
             this.carregando = true;
-            this.filmes = await this.api.get("filmes");
+            this.filmes = await this.api.get("filmes/" + localStorage.getItem("idioma"));
             this.filmesCompletos = this.filmes;
             const cinemas = new Set();
 
@@ -52,7 +79,7 @@ export class EmCartazComponent implements OnInit {
                     cinemas.add(c.cinema.nome)
                 });
             });
-            
+
             this.globals.cinemas = Array.from(cinemas).sort();
 
             const data = new Date();
@@ -98,7 +125,7 @@ export class EmCartazComponent implements OnInit {
 
     trocarVisualizacao(tipo, scroll) {
         this.preview.visualizacao = tipo;
-        if(scroll)
+        if (scroll)
             setTimeout(() => {
                 this.util.scrollParaDiv(tipo);
             }, 500);
@@ -125,5 +152,9 @@ export class EmCartazComponent implements OnInit {
         });
 
         return novo;
+    }
+
+    toggleModal() {
+        this.modal = !this.modal;
     }
 }
